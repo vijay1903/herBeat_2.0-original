@@ -593,15 +593,14 @@ angular.module("app", ['chart.js','ngRoute'])
 		$scope.propertyName = propertyName;
     };
 
-    // init the filtered items
-    $scope.search = function () {
-        $scope.filteredItems = $filter('filter')($scope.emaResp, function (item) {
-            for(var attr in item) {
-                if (searchMatch(item[attr], $scope.query))
-                    return true;
-            }
-            return false;
-        });
+    // init the filtered items\
+    $scope.searchText = '';
+    $scope.searchBy = function () {
+        if($scope.searchText == ''){
+            $scope.filteredItems = $scope.emaResp;
+        } else {
+            $scope.filteredItems = $filter('filter')($scope.emaResp,$scope.searchText);
+        }
         // take care of the sorting order
         if ($scope.sort.sortingOrder !== '') {
             $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sort.sortingOrder, $scope.sort.reverse);
@@ -700,7 +699,7 @@ angular.module("app", ['chart.js','ngRoute'])
                     user_food_habit: data[i].user_food_habit, user_feelings: data[i].user_feelings,
                     activity_time: new Date(data[i].activity_time).toDateString() + " " + new Date(data[i].activity_time).toLocaleTimeString()});
             }
-            $scope.search();
+            $scope.searchBy();
         })
         .error(function(error) {
                 console.log('Error: ' + error);
@@ -734,7 +733,7 @@ angular.module("app", ['chart.js','ngRoute'])
                         user_food_habit: data[i].user_food_habit, user_feelings: data[i].user_feelings,
                         activity_time: new Date(data[i].activity_time).toDateString() + " " + new Date(data[i].activity_time).toLocaleTimeString()});
                 }
-                $scope.search();
+                $scope.searchBy();
             })
             .error(function(error) {
                     console.log('Error: ' + error);
