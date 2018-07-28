@@ -1,0 +1,477 @@
+ <div class="jumbotron jumbotron-fluid" style="height:-webkit-fill-available" ng-show="welcomeVisible">
+    <div class="container" style="text-align: center;">
+        <h1 class="display-4">Welcome to Herbeat App</h1>
+        <hr class="my-4">
+        <p class="lead">Get started by selecting a patient ID above.</p>
+  </div>
+</div>
+<div id="stat-data" ng-show="statVisible">       
+<div class="card-deck">
+      <!--user goals-->
+        <div class="card mb-3" ng-controller="userGoalsCtrl">
+        <div class="card-header">
+            <i class="fa fa-table"></i> User Goals <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" title="Chart" style="float: right" data-target="#userGoalModal"><i class="fa fa-bar-chart"></i></button></div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Readiness Level</th>
+                  <th>Walk Target</th>
+                  <th>Current Energy</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="resp in pagedRecords[currentPage]">
+                  <td>{{resp.activity_date}}</td>
+                  <td>{{resp.activity_time}}</td>
+                  <td>{{resp.readiness_level}}</td>
+                  <td>{{resp.walk_target}}</td>
+                  <td>{{resp.current_energy}}</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+              <nav class="pagination pull-right">
+                  <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
+                    <li ng-class="{disabled: currentPage == 0}" class="page-item">
+                        <a href ng-click="prevPage()" class="page-link">« Prev</a>
+                    </li>
+
+                    <li ng-repeat="n in range(goalResp.length, itemsPerPage) "
+                        ng-class="{active: n == currentPage}" class="page-item"
+                    ng-click="setPage()">
+                        <a href ng-bind="n + 1" class="page-link">1</a>
+                    </li>
+
+                    <li ng-class="{disabled: (currentPage) == Math.floor(goalResp.length/itemsPerPage)}" class="page-item">
+                        <a href ng-click="nextPage()" class="page-link">Next »</a>
+                    </li>
+                </ul>
+            </nav>
+          </div>
+        </div>
+            <!--<div class="card-footer small text-muted">
+                <div class="card-deck">
+                    <div class="input-group date" id="goalstartDate" style="width:150px; margin-right: 5px">
+                        <input type="text" class="form-control" placeholder="Start Date" ng-model="goalstDate">
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="input-group date" id="goalendDate" style="width:150px; margin-right: 5px">
+                        <input type="text" class="form-control" placeholder="End Date" ng-model="goalendDate">
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <button type="button" class="btn btn-primary" ng-click="searchUsergoals()">Search</button>
+                </div>
+            </div>-->
+            <!--Modal dialog-->
+            <div class="modal fade" tabindex="-1" role="dialog" id="userGoalModal" aria-labelledby="msgModalLabel" aria-hidden="true" style="width: auto;height: auto">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width: 800px;height: 550px">
+                  <div class="modal-header">
+                    <h6 class="modal-title">User Goals</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" 
+                    chart-colors="colors" chart-options="options"  chart-series="series" ></canvas> 
+                  </div>
+                  <div class="modal-footer">
+                      <div>
+                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="readinessLevel()"><i class="fa fa-area-chart"></i> Readiness Level</button>
+                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="walkTarget()"><i class="fa fa-area-chart"></i> Walk Target</button>
+                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="currEnergy()"><i class="fa fa-area-chart"></i> Current Energy</button>
+                      </div>
+                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    <!--user activity-->
+        <div class="card mb-3" ng-controller="userActivitiesCtrl">
+        <div class="card-header">
+            <i class="fa fa-table"></i> User Activities <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" title="Chart" style="float: right" data-target="#userActModal"><i class="fa fa-bar-chart"></i></button></div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0" style="max-height: 200px">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Sitting Duration</th>
+                  <th>Walking Duration</th>
+                  <th>Step Count</th>
+                  <th>Distance Covered</th>
+                  
+                </tr>
+              </thead>
+              <tbody style="height:200px;overflow-y:auto;width: 100%;">
+                <tr ng-repeat="resp in pagedRecords[currentPage]">
+                  <td>{{resp.activity_date}}</td>
+                  <td>{{resp.activity_time}}</td>
+                  <td>{{resp.user_sitting_duration}}</td>
+                  <td>{{resp.user_walking_duration}}</td>
+                  <td>{{resp.user_step_count}}</td>
+                  <td>{{resp.distance_covered_in_miles}}</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+              <nav class="pagination pull-right">
+                  <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
+                    <li ng-class="{disabled: currentPage == 0}" class="page-item">
+                        <a href ng-click="prevPage()" class="page-link">« Prev</a>
+                    </li>
+
+                    <li ng-repeat="n in range(activityResp.length, itemsPerPage) "
+                        ng-class="{active: n == currentPage}" class="page-item"
+                    ng-click="setPage()">
+                        <a href ng-bind="n + 1" class="page-link">1</a>
+                    </li>
+
+                    <li ng-class="{disabled: (currentPage) == Math.floor(activityResp.length/itemsPerPage)}" class="page-item">
+                        <a href ng-click="nextPage()" class="page-link">Next »</a>
+                    </li>
+                </ul>
+            </nav>
+          </div>
+        </div>
+            <!--<div class="card-footer small text-muted">
+                <div class="card-deck">
+                    <div class="input-group date" id="actstartDate" style="width:150px; margin-right: 5px">
+                        <input type="text" class="form-control" placeholder="Start Date" ng-model="activitystDate">
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="input-group date" id="actendDate" style="width:150px; margin-right: 5px">
+                        <input type="text" class="form-control" placeholder="End Date" ng-model="activityendDate">
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                    </div>
+                    <button type="button" class="btn btn-primary" ng-click="searchActivity()">Search</button>
+                </div>
+            </div>-->
+            <!--
+                Here lies the hidden chart modal box
+            -->
+            <!--Modal dialog-->
+            <div class="modal fade" tabindex="-1" role="dialog" id="userActModal" aria-labelledby="msgModalLabel" aria-hidden="true" style="width: auto;height: auto">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width: 800px;height: 550px">
+                  <div class="modal-header">
+                    <h6 class="modal-title">User Activities</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" 
+                    chart-colors="colors" chart-options="options"  chart-series="series" ></canvas> 
+                  </div>
+                  <div class="modal-footer">
+                      <div>
+                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="sittingduration()"><i class="fa fa-area-chart"></i> Sitting Duration</button>
+                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="walkingduration()"><i class="fa fa-area-chart"></i> Walking Duration</button>
+                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="stepcount()"><i class="fa fa-area-chart"></i> Step Count</button>
+                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="distcovered()"><i class="fa fa-area-chart"></i> Distance Covered</button>
+                      </div>
+                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+        <!--ema response-->
+        <div class="card-deck" ng-controller="EMAResCtrl">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> EMA Response <span class="badge badge-success" ng-model="searchCount">{{searchCount}}</span> <button class="btn btn-danger float-right" ng-click="resetFilter();">Reset Filter</button></div>
+                <div class="card-body">
+                    <div class="table table-hover">
+                    <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                            <th ng-click="sortBy('response_date')"><a href=""> Date </a>
+                                <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span>
+                            </th>
+                            <th ng-click="sortBy('response_date')"><a href=""> Time </a>
+                                <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span>
+                            </th>
+                            <th><a href="" ng-click="sortBy('activity')"> Activity</a>
+                                <span class="sortorder" ng-show="propertyName === 'activity'" ng-class="{reverse: reverse}"></span>
+                                <div class="custom_dropdown">
+                                    <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
+                                    <div class="custom_dropdown-content">
+                                        <a href="" data-ng-click="clicked(act_filter_options,'selectAll');">Select All</a>
+                                        <a href="" data-ng-click="clicked(act_filter_options,'deselectAll')">De-select All</a>
+                                        <a href="" ng-repeat="x in act_filter_options track by $index" data-ng-click="x.flag=!x.flag; clicked(act_filter_options);"><i ng-class="x.flag?'fa fa-check':'fa fa-times'"></i> {{x.label}}</a>
+                                    </div>
+                                </div>
+                            </th>
+                            <th><a href="" ng-click="sortBy('company')"> Company </a>
+                                <span class="sortorder" ng-show="propertyName === 'company'" ng-class="{reverse: reverse}"></span>
+                                <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in comp_filter_options" ng-model="searchText.company" style="max-width:18px;"></select> -->
+                                <div class="custom_dropdown">
+                                    <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
+                                    <div class="custom_dropdown-content">
+                                        <a href="" ng-click="clicked(comp_filter_options,'selectAll');">Select All</a>
+                                        <a href="" ng-click="clicked(comp_filter_options,'deselectAll');">De-select All</a>    
+                                        <a href="" ng-repeat="x in comp_filter_options track by $index" ng-click="x.flag=!x.flag; clicked(comp_filter_options);"><i ng-class="x.flag?'fa fa-check':'fa fa-times'"></i>  {{x.label}}</a>
+                                    </div>
+                                </div>
+                            </th>
+                            <th><a href="" ng-click="sortBy('location')"> Location </a>
+                                <span class="sortorder" ng-show="propertyName === 'location'" ng-class="{reverse: reverse}"></span>
+                                <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in loc_filter_options" ng-model="searchText.location" style="max-width:18px;"></select> -->
+                                <div class="custom_dropdown">
+                                    <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
+                                    <div class="custom_dropdown-content">
+                                        <a href="" ng-click="clicked(loc_filter_options,'selectAll');">Select All</a>
+                                        <a href="" ng-click="clicked(loc_filter_options,'deselectAll');">De-select All</a>    
+                                        <a href="" ng-repeat="x in loc_filter_options track by $index" ng-click="x.flag=!x.flag; clicked(loc_filter_options);"><i ng-class="x.flag?'fa fa-check':'fa fa-times'"></i>  {{x.label}}</a>
+                                    </div>
+                                </div>                                                            
+                            </th>
+                            <th><a href="" ng-click="sortBy('food')"> Food</a>
+                                <span class="sortorder" ng-show="propertyName === 'food'" ng-class="{reverse: reverse}"></span>
+                                <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in food_filter_options" ng-model="searchText.food" style="max-width:18px;"></select> -->
+                                <div class="custom_dropdown">
+                                    <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
+                                    <div class="custom_dropdown-content">
+                                        <a href="" ng-click="clicked(food_filter_options,'selectAll');">Select All</a>
+                                        <a href="" ng-click="clicked(food_filter_options,'deselectAll');">De-select All</a>    
+                                        <a href="" ng-repeat="x in food_filter_options track by $index" ng-click="x.flag=!x.flag; clicked(food_filter_options);"><i ng-class="x.flag?'fa fa-check':'fa fa-times'"></i>  {{x.label}}</a>
+                                    </div>
+                                </div>
+                            </th>
+                            <th><a href="" ng-click="sortBy('feel')"> Feeling</a>
+                                <span class="sortorder" ng-show="propertyName === 'feel'" ng-class="{reverse: reverse}"></span>
+                                <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in feel_filter_options" ng-model="searchText.feel" style="max-width:18px;"></select> -->
+                                <div class="custom_dropdown">
+                                    <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
+                                    <div class="custom_dropdown-content">
+                                        <a href="" ng-click="clicked(feel_filter_options,'selectAll');">Select All</a>
+                                        <a href="" ng-click="clicked(feel_filter_options,'deselectAll');">De-select All</a>    
+                                        <a href="" ng-repeat="x in feel_filter_options track by $index" ng-click="x.flag=!x.flag; clicked(feel_filter_options);"><i ng-class="x.flag?'fa fa-check':'fa fa-times'"></i>  {{x.label}}</a>
+                                    </div>
+                                </div>
+                            </th>
+                            <th><a href="" ng-click="sortBy('motivation')"> Motivational Statement</a>
+                                <span class="sortorder" ng-show="propertyName === 'motivation'" ng-class="{reverse: reverse}"></span>
+                            </th>
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="resp in pagedRecords[currentPage]">
+                          <td>{{resp.activity_date}}</td>
+                          <td>{{resp.activity_time}}</td>
+                          <td>{{resp.user_selected_activity}}</td>
+                          <td>{{resp.user_company}}</td>
+                          <td>{{resp.user_curr_location}}</td>
+                          <td>{{resp.user_food_habit}}</td>
+                          <td>{{resp.user_feelings}}</td>
+                          <td>{{resp.motivation_screen}}</td>
+                          
+                        </tr>
+                      </tbody>
+                    </table>
+                        <nav class="pagination pull-right">
+                            <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
+                              <li ng-class="{disabled: currentPage == 0}" class="page-item">
+                                  <a href ng-click="prevPage()" class="page-link">« Prev</a>
+                              </li>
+
+                              <li ng-repeat="n in range(emaResp.length, itemsPerPage) "
+                                  ng-class="{active: n == currentPage}" class="page-item"
+                              ng-click="setPage()">
+                                  <a href ng-bind="n + 1" class="page-link">1</a>
+                              </li>
+
+                              <li ng-class="{disabled: (currentPage) == Math.floor(emaResp.length/itemsPerPage)}" class="page-item">
+                                  <a href ng-click="nextPage()" class="page-link">Next »</a>
+                              </li>
+                          </ul>
+                      </nav>
+                  </div>
+                </div>
+                <!--<div class="card-footer small text-muted">
+                    <div class="card-deck">
+                        <div class="input-group date" id="emastartDate" style="width:150px; margin-right: 5px">
+                            <input type="text" class="form-control" placeholder="Start Date" ng-model="emastDate">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="input-group date" id="emaendDate" style="width:150px; margin-right: 5px">
+                            <input type="text" class="form-control" placeholder="End Date" ng-model="emaendDate">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        </div>
+                        <button type="button" class="btn btn-primary" ng-click="searchEmaResp()">Search</button>
+                    </div>
+                </div>-->
+              </div>
+        </div>
+        <!--user heart rate-->
+        <!-- Example DataTables Card-->
+        <div class="card mb-3" ng-controller="heartRateCtrl">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i> Heart Rate</div>
+        <div class="card-body">
+			<div id="hratebarchartc">
+			  <canvas id="hratebarchart" class="chart chart-bar" chart-data="hpageData" chart-labels="hlabels" 
+		   chart-colors="hcolors" chart-options="options"  chart-series="series"></canvas> 
+		   </div>
+		   <div id="hratenav" style="display: block;text-align: center;width: 100%;height: 40px;">
+			    <button ng-click="goPrev()" ng-disabled="hisPrev" class="page-link" style="float: left;margin: 0px;margin-left: 50%;">« Prev</button>
+				<button ng-click="goNext()" ng-disabled="hisNext" class="page-link" style="float: left;margin-left: 5px;">Next »</button>
+		   </div>
+        </div>
+            <!--<div class="card-footer small text-muted">
+                <div class="card-deck">
+                <div class="input-group date" id="hstartDate" style="width:150px; margin-right: 5px">
+                    <input type="text" class="form-control" placeholder="Start Date" ng-model="hstDate">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group date" id="hendDate" style="width:150px; margin-right: 5px">
+                    <input type="text" class="form-control" placeholder="End Date" ng-model="hendDate">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="searchHeartrate()">Search</button>
+            </div>
+            </div>-->
+      </div>
+        <!--user watched videos-->
+        <!-- Example DataTables Card-->
+        <div class="card mb-3" ng-controller="watchedVideoCtrl">
+        <div class="card-header">
+          <i class="fa fa-table"></i> Watched Videos</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Video Title</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="video in pagedRecords[currentPage]">
+                  <td>{{video.activity_date}}</td>
+                  <td>{{video.activity_time}}</td>
+                  <td>{{video.video_title}}</td>
+                </tr>
+              </tbody>
+            </table>
+              <nav class="pagination pull-right">
+                <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
+                  <li ng-class="{disabled: currentPage == 0}" class="page-item">
+                      <a href ng-click="prevPage()" class="page-link">« Prev</a>
+                  </li>
+
+                  <li ng-repeat="n in range(videos.length, itemsPerPage) "
+                      ng-class="{active: n == currentPage}" class="page-item"
+                  ng-click="setPage()">
+                      <a href ng-bind="n + 1" class="page-link">1</a>
+                  </li>
+
+                  <li ng-class="{disabled: (currentPage) == Math.floor(videos.length/itemsPerPage)}" class="page-item">
+                      <a href ng-click="nextPage()" class="page-link">Next »</a>
+                  </li>
+              </ul>
+          </nav>
+          </div>
+        </div>
+        <!--<div class="card-footer small text-muted">
+            <div class="card-deck">
+                <div class="input-group date" id="startDate" style="width:150px; margin-right: 5px">
+                    <input type="text" class="form-control" placeholder="Start Date" ng-model="stDate">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group date" id="endDate" style="width:150px; margin-right: 5px">
+                    <input type="text" class="form-control" placeholder="End Date" ng-model="endDate">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="searchWatchedVideos()">Search</button>
+            </div>
+        </div>-->
+            
+            
+            
+            
+            
+      </div>
+        
+        <div class="card mb-3" ng-controller="HeartRateCtrl">
+        <div class="card-header">
+          <i class="fa fa-table"></i> User Inquired Heart Rate</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Heart Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="rate in pagedRecords[currentPage]">
+                  <td>{{rate.activity_date}}</td>
+                  <td>{{rate.activity_time}}</td>
+                  <td>{{rate.user_heart_rate}}</td>
+                </tr>
+              </tbody>
+            </table>
+              <nav class="pagination pull-right">
+                <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
+                  <li ng-class="{disabled: currentPage == 0}" class="page-item">
+                      <a href ng-click="prevPage()" class="page-link">« Prev</a>
+                  </li>
+
+                  <li ng-repeat="n in range(heartRate.length, itemsPerPage) "
+                      ng-class="{active: n == currentPage}" class="page-item"
+                  ng-click="setPage()">
+                      <a href ng-bind="n + 1" class="page-link">1</a>
+                  </li>
+
+                  <li ng-class="{disabled: (currentPage) == Math.floor(heartRate.length/itemsPerPage)}" class="page-item">
+                      <a href ng-click="nextPage()" class="page-link">Next »</a>
+                  </li>
+              </ul>
+          </nav>
+          </div>
+        </div>
+        <!--<div class="card-footer small text-muted">
+            <div class="card-deck">
+                <div class="input-group date" id="startHrDate" style="width:150px; margin-right: 5px">
+                    <input type="text" class="form-control" placeholder="Start Date" ng-model="stHrDate">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                </div>
+                <div class="input-group date" id="endHrDate" style="width:150px; margin-right: 5px">
+                    <input type="text" class="form-control" placeholder="End Date" ng-model="endHrDate">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" aria-hidden="true"></i></span>
+                </div>
+                <button type="button" class="btn btn-primary" ng-click="searchHeartRate()">Search</button>
+            </div>
+        </div>-->
+        </div>
+     
+       
+</div>
