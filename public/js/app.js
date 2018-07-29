@@ -1143,10 +1143,17 @@ angular.module("app", ['chart.js', 'ngRoute', 'ngCookies', 'ngSanitize'])
         sortingOrder : 'id',
         reverse : false
     };
+
     $scope.sortBy = function(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.filteredItems = $filter('orderBy')($scope.emaResp, propertyName, $scope.reverse);
+        $scope.groupToPages();
         $scope.propertyName = propertyName;
     };
+    /*$scope.sortBy = function(propertyName) {
+        $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
+    };*/
     $scope.gap = 5;
     
     $scope.filteredItems = [];

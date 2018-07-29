@@ -37,9 +37,9 @@ app.use(methodOverride());
 //passport session store in db
 var options = {
     host: 'localhost',
-	port: 3306,
+	  port: 3306,
     user: 'root',
-    password: 'root',
+    password: 'newrootpassword',
     database: 'herbeat'
 };
 

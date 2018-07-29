@@ -206,8 +206,8 @@
                             <th ng-click="sortBy('response_date')"><a href=""> Time </a>
                                 <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span>
                             </th>
-                            <th><a href="" ng-click="sortBy('activity')"> Activity</a>
-                                <span class="sortorder" ng-show="propertyName === 'activity'" ng-class="{reverse: reverse}"></span>
+                            <th class="sortable" style="width: 15%" >
+                            <a data-ng-click="sortBy('user_selected_activity')">Activity</a>
                                 <div class="custom_dropdown">
                                     <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
                                     <div class="custom_dropdown-content">
@@ -217,8 +217,8 @@
                                     </div>
                                 </div>
                             </th>
-                            <th><a href="" ng-click="sortBy('company')"> Company </a>
-                                <span class="sortorder" ng-show="propertyName === 'company'" ng-class="{reverse: reverse}"></span>
+                            <th class="sortable" style="width: 15%" >
+                            <a data-ng-click="sortBy('user_company')">Company</a>
                                 <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in comp_filter_options" ng-model="searchText.company" style="max-width:18px;"></select> -->
                                 <div class="custom_dropdown">
                                     <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
@@ -229,8 +229,8 @@
                                     </div>
                                 </div>
                             </th>
-                            <th><a href="" ng-click="sortBy('location')"> Location </a>
-                                <span class="sortorder" ng-show="propertyName === 'location'" ng-class="{reverse: reverse}"></span>
+                            <th class="sortable" style="width: 15%" >
+                            <a data-ng-click="sortBy('user_curr_location')">Location</a>
                                 <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in loc_filter_options" ng-model="searchText.location" style="max-width:18px;"></select> -->
                                 <div class="custom_dropdown">
                                     <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
@@ -241,8 +241,8 @@
                                     </div>
                                 </div>                                                            
                             </th>
-                            <th><a href="" ng-click="sortBy('food')"> Food</a>
-                                <span class="sortorder" ng-show="propertyName === 'food'" ng-class="{reverse: reverse}"></span>
+                            <th class="sortable" style="width: 15%" >
+                            <a data-ng-click="sortBy('user_food_habit')">Food</a>
                                 <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in food_filter_options" ng-model="searchText.food" style="max-width:18px;"></select> -->
                                 <div class="custom_dropdown">
                                     <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
@@ -253,8 +253,8 @@
                                     </div>
                                 </div>
                             </th>
-                            <th><a href="" ng-click="sortBy('feel')"> Feeling</a>
-                                <span class="sortorder" ng-show="propertyName === 'feel'" ng-class="{reverse: reverse}"></span>
+                            <th class="sortable" style="width: 15%" >
+                            <a data-ng-click="sortBy('user_feelings')">Feelings</a>
                                 <!-- <select name="activity" id="activity" ng-change="searchBy()" ng-options="i for i in feel_filter_options" ng-model="searchText.feel" style="max-width:18px;"></select> -->
                                 <div class="custom_dropdown">
                                     <button class="custom_dropbtn"><i class="fa fa-caret-down"></i></button>
