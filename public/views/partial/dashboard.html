@@ -70,9 +70,9 @@
                 </div>
             </div>-->
             <!--Modal dialog-->
-            <div class="modal fade" tabindex="-1" role="dialog" id="userGoalModal" aria-labelledby="msgModalLabel" aria-hidden="true" style="width: auto;height: auto">
+            <div class="modal fade" tabindex="-1" role="dialog" id="userGoalModal" aria-labelledby="msgModalLabel" aria-hidden="true" style="width: auto;height: auto;overflow-x:scroll;overflow-y:hidden">
               <div class="modal-dialog" role="document">
-                <div class="modal-content" style="width: 800px;height: 550px">
+                <div class="modal-content" style="width: 400px;height: 500px">
                   <div class="modal-header">
                     <h6 class="modal-title">User Goals</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -80,17 +80,18 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                      <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" 
+                    <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" 
                     chart-colors="colors" chart-options="options"  chart-series="series" ></canvas> 
                   </div>
-                  <div class="modal-footer">
-                      <div>
-                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="readinessLevel()"><i class="fa fa-area-chart"></i> Readiness Level</button>
-                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="walkTarget()"><i class="fa fa-area-chart"></i> Walk Target</button>
-                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="currEnergy()"><i class="fa fa-area-chart"></i> Current Energy</button>
-                      </div>
-                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                  </div>
+                  
+                 
+				  
+					<button class="btn btn-secondary btn-sm " data-dismiss="modal">Close</button>
+                    <button class="btn btn-outline-info btn-sm" ng-click="readinessLevel()"><i class="fa fa-area-chart"></i> Readiness Level</button>
+					<button class="btn btn-outline-info btn-sm " ng-click="walkTarget()"><i class="fa fa-area-chart"></i> Walk Target</button>
+					<button class="btn btn-outline-info btn-sm " ng-click="currEnergy()"><i class="fa fa-area-chart"></i> Current Energy</button>
+                    
+                  
                 </div>
               </div>
             </div>
@@ -163,9 +164,9 @@
                 Here lies the hidden chart modal box
             -->
             <!--Modal dialog-->
-            <div class="modal fade" tabindex="-1" role="dialog" id="userActModal" aria-labelledby="msgModalLabel" aria-hidden="true" style="width: auto;height: auto">
+            <div class="modal fade" tabindex="-1" role="dialog" id="userActModal" aria-labelledby="msgModalLabel" aria-hidden="true" style="width: auto;height: auto;overflow-x:scroll;overflow-y:hidden">
               <div class="modal-dialog" role="document">
-                <div class="modal-content" style="width: 800px;height: 550px">
+                <div class="modal-content" style="width: 400px;height: 500px">
                   <div class="modal-header">
                     <h6 class="modal-title">User Activities</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -176,15 +177,15 @@
                       <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" 
                     chart-colors="colors" chart-options="options"  chart-series="series" ></canvas> 
                   </div>
-                  <div class="modal-footer">
-                      <div>
-                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="sittingduration()"><i class="fa fa-area-chart"></i> Sitting Duration</button>
-                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="walkingduration()"><i class="fa fa-area-chart"></i> Walking Duration</button>
-                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="stepcount()"><i class="fa fa-area-chart"></i> Step Count</button>
-                        <button type="button" class="btn btn-outline-info btn-sm" ng-click="distcovered()"><i class="fa fa-area-chart"></i> Distance Covered</button>
-                      </div>
+                  
+                     
+                        <button class="btn btn-outline-info btn-sm" ng-click="sittingduration()"><i class="fa fa-area-chart"></i> Sitting Duration</button>
+                        <button class="btn btn-outline-info btn-sm" ng-click="walkingduration()"><i class="fa fa-area-chart"></i> Walking Duration</button>
+                        <button class="btn btn-outline-info btn-sm" ng-click="stepcount()"><i class="fa fa-area-chart"></i> Step Count</button>
+                        <button class="btn btn-outline-info btn-sm" ng-click="distcovered()"><i class="fa fa-area-chart"></i> Distance Covered</button>
+                      
                       <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -195,14 +196,14 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fa fa-table"></i> EMA Response <span class="badge badge-success" ng-model="searchCount">{{searchCount}}</span> <button class="btn btn-danger float-right" ng-click="resetFilter();">Reset Filter</button></div>
-                <div class="card-body">
+                <div class="card-body" style='overflow-x:scroll;overflow-y:hidden'>
                     <div class="table table-hover">
                     <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                       <thead>
-                        <tr>
+						<tr>
                             <th ng-click="sortBy('response_date')"><a href=""> Date </a>
-                                <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span>
-                            </th>
+                                <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span> 
+						    </th>
                             <th ng-click="sortBy('response_date')"><a href=""> Time </a>
                                 <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span>
                             </th>
@@ -271,7 +272,8 @@
                           
                         </tr>
                       </thead>
-                      <tbody>
+                     
+						
                         <tr ng-repeat="resp in pagedRecords[currentPage]">
                           <td>{{resp.activity_date}}</td>
                           <td>{{resp.activity_time}}</td>
@@ -283,9 +285,8 @@
                           <td>{{resp.motivation_screen}}</td>
                           
                         </tr>
-                      </tbody>
                     </table>
-                        <nav class="pagination pull-right">
+                        <nav class="pagination pull-right" style = "overflow-x:scroll;overflow-y:hidden">
                             <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
                               <li ng-class="{disabled: currentPage == 0}" class="page-item">
                                   <a href ng-click="prevPage()" class="page-link">« Prev</a>
