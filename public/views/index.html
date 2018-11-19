@@ -2,12 +2,22 @@
 <html lang="en" ng-app="app">
 
 <head>
+  <!-- Manifest link -->
+  <link rel="manifest" href="../manifest.json">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Herbeat App</title>
+
+  <meta name="theme-color" content="#c13f10">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Herbeat">
+    <link rel="apple-touch-icon" href="../img/icons/logo_96.png">
+
+    <link rel="icon" href="../img/icons/logo_96.png" type="image/png">
+    
   <!-- Bootstrap core CSS-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.min.css" rel="stylesheet">
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +27,8 @@
   <link href="../vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin.css" rel="stylesheet">
+  <!-- Custom scripts for service worker -->
+  <script src="../js/sw.js"></script>
 </head>
 <style>
   .custom_dropbtn {
