@@ -101,6 +101,12 @@ th{
             <span class="nav-link-text">Sent Messages</span>
           </a>
         </li>
+        <li class="nav-item" data-toggle="modal" data-target = "#msgModal" data-placement="right" title="Send Message">
+          <a class="nav-link">
+            <i class="fa fa-fw fa-envelope"></i>
+            <span class="nav-link-text">Send Message</span>
+          </a>
+        </li>
         <!--<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa-table"></i>
@@ -291,19 +297,19 @@ th{
               <option value="" selected>-- select patient ID --</option>
           </select>
           <div class="card-deck" style="display:inline-flex position:relative; margin-left: 1px">
-                <div class="input-group date" id="startDate" style="width:140px; margin-right: 5px">
+                <div class="input-group date" id="startDate" style="width:150px; margin-right: 5px">
                     <input type="text" class="form-control" placeholder="Start Date" ng-model="startDate" ng-disabled="welcomeVisible">
                     <span class="input-group-addon">
                         <i class="fa fa-calendar" aria-hidden="true"></i></span>
                 </div>
-                <div class="input-group date" id="endDate" style="width:140px; margin-right: 5px">
+                <div class="input-group date" id="endDate" style="width:150px; margin-right: 5px">
                     <input type="text" class="form-control" placeholder="End Date" ng-model="endDate" ng-disabled="welcomeVisible">
                     <span class="input-group-addon">
                         <i class="fa fa-calendar" aria-hidden="true"></i></span>
                 </div>
-                <button type="button" class="btn-sm btn-primary fa fa-search" ng-click="searchByDate()" ng-disabled="welcomeVisible"></button>
+                <button type="button" class="bt btn-primary btn-lg fa fa-search" ng-click="searchByDate()" ng-disabled="welcomeVisible"></button>
             </div>
-          <button ng-disabled="welcomeVisible" id="sendMsg" type="button" class="btn btn-info" data-toggle="modal" data-target="#msgModal" style="float:right">Send Message</button>
+          <!--button ng-disabled="welcomeVisible" id="sendMsg" type="button" class="btn btn-info" data-toggle="modal" data-target="#msgModal" style="float:right">Send Message</button-->
           <!--Modal dialog-->
           <div class="modal fade" tabindex="-1" role="dialog" id="msgModal" aria-labelledby="msgModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

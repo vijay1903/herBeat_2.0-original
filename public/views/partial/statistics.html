@@ -29,9 +29,10 @@
                 </tr>
               </tbody>
             </table>
-			<div class="nav-scroller"> 
-              <nav class="nav d-flex justify-content-left-side">
-                  <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
+			     <div class="nav-scroller"> 
+                <!--nav class="pagination pull-right" style = "overflow-x:scroll;overflow-y:hidden"-->
+            <nav class="nav d-flex justify-content-left-side" style = "overflow-x:scroll;overflow-y:hidden">
+                  <ul class="pagination pagination-sm flex-sm-wrap">
                     <li ng-class="{disabled: currentPage == 0}" class="page-item">
                         <a href ng-click="prevPage()" class="page-link">« Prev</a>
                     </li>
@@ -47,7 +48,7 @@
                     </li>
                 </ul>
             </nav>
-			</div>
+			     </div>
           </div>
         </div>
         <!--<div class="card-footer small text-muted">

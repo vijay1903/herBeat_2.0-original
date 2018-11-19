@@ -80,16 +80,14 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" 
-                    chart-colors="colors" chart-options="options"  chart-series="series" ></canvas> 
+                    <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-colors = "colors"
+                    chart-options="options"  chart-series="series" ></canvas> 
                   </div>
                   
-                 
-				  
-					<button class="btn btn-secondary btn-sm " data-dismiss="modal">Close</button>
-                    <button class="btn btn-outline-info btn-sm" ng-click="readinessLevel()"><i class="fa fa-area-chart"></i> Readiness Level</button>
+          <button class="btn btn-outline-info btn-sm" ng-click="readinessLevel()"><i class="fa fa-area-chart"></i> Readiness Level</button>
 					<button class="btn btn-outline-info btn-sm " ng-click="walkTarget()"><i class="fa fa-area-chart"></i> Walk Target</button>
 					<button class="btn btn-outline-info btn-sm " ng-click="currEnergy()"><i class="fa fa-area-chart"></i> Current Energy</button>
+          <button class="btn btn-secondary btn-sm " data-dismiss="modal">Close</button>
                     
                   
                 </div>
@@ -174,8 +172,8 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                      <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" 
-                    chart-colors="colors" chart-options="options"  chart-series="series" ></canvas> 
+                    <canvas class="chart chart-bar" chart-data="data" chart-labels="labels" chart-colors= "colors"
+                     chart-options="options"  chart-series="series" ></canvas> 
                   </div>
                   
                      
@@ -183,8 +181,7 @@
                         <button class="btn btn-outline-info btn-sm" ng-click="walkingduration()"><i class="fa fa-area-chart"></i> Walking Duration</button>
                         <button class="btn btn-outline-info btn-sm" ng-click="stepcount()"><i class="fa fa-area-chart"></i> Step Count</button>
                         <button class="btn btn-outline-info btn-sm" ng-click="distcovered()"><i class="fa fa-area-chart"></i> Distance Covered</button>
-                      
-                      <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                   
                 </div>
               </div>
@@ -200,10 +197,10 @@
                     <div class="table table-hover">
                     <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                       <thead>
-						<tr>
+						          <tr>
                             <th ng-click="sortBy('response_date')"><a href=""> Date </a>
                                 <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span> 
-						    </th>
+						                </th>
                             <th ng-click="sortBy('response_date')"><a href=""> Time </a>
                                 <span class="sortorder" ng-show="propertyName === 'response_date'" ng-class="{reverse: reverse}"></span>
                             </th>
@@ -286,26 +283,25 @@
                           
                         </tr>
                     </table>
-						<div class="nav-scroller"> 
+						        <div class="nav-scroller"> 
                         <!--nav class="pagination pull-right" style = "overflow-x:scroll;overflow-y:hidden"-->
-						<nav class="nav d-flex justify-content-left-side">
+						          <nav class="nav d-flex justify-content-left-side" style = "overflow-x:scroll;overflow-y:hidden">
                             <ul class="pagination pagination-sm flex-sm-wrap">
                               <li ng-class="{disabled: currentPage == 0}" class="page-item">
                                   <a href ng-click="prevPage()" class="page-link">« Prev</a>
                               </li>
 
                               <li ng-repeat="n in range(emaResp.length, itemsPerPage) "
-                                  ng-class="{active: n == currentPage}" class="page-item"
-								  ng-click="setPage()">
+                                  ng-class="{active: n == currentPage}" class="page-item" ng-click="setPage()">
                                   <a href ng-bind="n + 1" class="page-link">1</a>
                               </li>
 
                               <li ng-class="{disabled: (currentPage) == Math.floor(emaResp.length/itemsPerPage)}" class="page-item">
                                   <a href ng-click="nextPage()" class="page-link">Next »</a>
                               </li>
-                          </ul>
-						</nav>
-						</div>
+                            </ul>
+						          </nav>
+						        </div>
                   </div>
                 </div>
                 <!--<div class="card-footer small text-muted">
@@ -362,7 +358,7 @@
         <div class="card mb-3" ng-controller="watchedVideoCtrl">
         <div class="card-header" >
           <i class="fa fa-table"></i> Watched Videos</div>
-        <div class="card-body">
+        <div class="card-body" style='overflow-x:scroll;overflow-y:hidden'>
           <div class="table-responsive">
             <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
               <thead>
@@ -380,8 +376,10 @@
                 </tr>
               </tbody>
             </table>
-            <nav class="pagination pull-right" >
-                <ul class="pagination pagination-sm flex-sm-wrap" style="margin-bottom: 0px">
+            <div class="nav-scroller"> 
+                <!--nav class="pagination pull-right" style = "overflow-x:scroll;overflow-y:hidden"-->
+            <nav class="nav d-flex justify-content-left-side" style = "overflow-x:scroll;overflow-y:hidden">
+              <ul class="pagination pagination-sm flex-sm-wrap">
                   <li ng-class="{disabled: currentPage == 0}" class="page-item">
                       <a href ng-click="prevPage()" class="page-link">« Prev</a>
                   </li>
@@ -395,8 +393,9 @@
                   <li ng-class="{disabled: (currentPage) == Math.floor(videos.length/itemsPerPage)}" class="page-item">
                       <a href ng-click="nextPage()" class="page-link">Next »</a>
                   </li>
-              </ul>
+              </ul>   
           </nav>
+          </div>
           </div>
         </div>
         <!--<div class="card-footer small text-muted">
@@ -413,12 +412,7 @@
                 </div>
                 <button type="button" class="btn btn-primary" ng-click="searchWatchedVideos()">Search</button>
             </div>
-        </div>-->
-            
-            
-            
-            
-            
+        </div>--> 
       </div>
         
         <div class="card mb-3" ng-controller="HeartRateCtrl">
